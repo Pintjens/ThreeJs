@@ -44,7 +44,11 @@ function onClick(event){
     intersects[0]?.object.material.color.set(nextColour());
 
 }
+function onScroll(event){
+    if(event.wheelDelta > 0) camera.position.z -= 0.5;
+    else camera.position.z += 0.5;
 
+}
 
 function animate( time ) {
         
@@ -56,4 +60,7 @@ function animate( time ) {
 	renderer.render( scene, camera );
 }
 
+
+
 window.addEventListener("click", onClick);
+window.addEventListener("wheel", onScroll);
