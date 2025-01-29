@@ -35,34 +35,25 @@ function nextColour(){
         return colourArr[currentColour++];
 }
 
+function onClick(event){
 
-let clicked = false;
-function onPointerMove( event ) {
-	pointer.x = ( 2 / window.innerWidth ) * event.clientX - 1;
-	pointer.y = - (2 / window.innerHeight) * event.clientY + 1;
+    pointer.x = ( 2 / window.innerWidth ) * event.clientX - 1;
+    pointer.y = - (2 / window.innerHeight) * event.clientY + 1;
+    raycaster.setFromCamera( pointer, camera );
+    const intersects = raycaster.intersectObjects( scene.children );
+    intersects[0]?.object.material.color.set(nextColour());
+
 }
 
 
 function animate( time ) {
-
-    if(clicked){
-        raycaster.setFromCamera( pointer, camera );
-        const intersects = raycaster.intersectObjects( scene.children );
-    
-        if( intersects[0] && clicked){
-            intersects[0].object.material.color.set(nextColour());
-        }
-        clicked = false;
-    }
-
         
     box01.rotation.x = time / 6300;
 	box01.rotation.y = time / 3300;
 	box02.rotation.x = time / 3300;
     box02.rotation.y = time / 6300;
-	renderer.render( scene, camera );
 
+	renderer.render( scene, camera );
 }
 
-window.addEventListener( 'pointermove', onPointerMove );
-window.addEventListener("click", x => {clicked = true;});
+window.addEventListener("click", onClick);
